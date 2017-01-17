@@ -13,14 +13,38 @@
 
 <body>
   <div ng-controller="mainCtrl">
+    <h1>make sure to update the header on the .csv to just say "Precip"</h1>
     <input id="file-input" type="file" accept=".csv" />
+
 <div>
-  <div ng-repeat="a in dataTable">
-    <h1 ng-repeat="b in a">
-      {{b}}
-    </h1>
+
+</div>
+
+
+
+<br />
+<div>
+  <input ng-model="photoDate"/>{{photoDate}} YYYY-MM-DD<br />
+  <button ng-click="previousRains()">Calculate Rains</button>
+  <h1>30 days Rain: {{thirtyDaysRain}} (mm)</h1>
+  <h1>Prev Year Rain: {{prevYearRain}} (mm)</h1>
+</div>
+
+
+<div>
+  <button ng-click="precipChartParse()">Make Chart</button>
+  <div>
+    <canvas id="bar" class="chart chart-bar" chart-data="chartY" chart-labels="chartX"></canvas>
   </div>
 </div>
+
+<button ng-click="findAveRain()">Average</button>
+<p>
+  Average Annual: {{aveAnnualRain[0].value}}
+</p>
+
+
+
 
 
 
@@ -30,5 +54,9 @@
   </body>
 <!-- App files -->
   <script src="library/papaparse.js"></script>
+  <script src="library/d3.js"></script>
+  <script src="library/charts.js"></script>
+  <script src ="library/angular-chart.js"></script>
+  <script src="library/moment.js"></script>
   <script src="app.js"></script>
 </html>
