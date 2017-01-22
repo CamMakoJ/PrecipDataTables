@@ -1,4 +1,4 @@
-var app = angular.module('rainApp', ["chart.js"]);
+var app = angular.module('rainApp', ["chart.js",'ngMaterial']);
 
 app.controller('mainCtrl', function($scope) {
 
