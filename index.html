@@ -16,8 +16,17 @@
 
 <body>
     <div ng-controller="mainCtrl">
+      <div>
+        <p>
+          To start: download a single township from the ACIS website as a CSV
+          <br />
+          change the name of the 'Precip. (mm)'' column to just 'Precip'
+          <br />
+          Let the wetland magic begin by choosing that file below.
+        </p>
 
-        <h1>make sure to update the header on the .csv to just say "Precip"</h1>
+      </div>
+
 
 <md-input-container>
 
@@ -26,32 +35,26 @@
 
 </md-input-container>
 
-
 <div>
-
-</div>
-
-
-
-<br />
-<div>
+  <p>
+    Place the photo date you wish to see rain calculations for:
+  </p>
   <input ng-model="photoDate"/>{{photoDate}} YYYY-MM-DD<br />
   <button ng-click="previousRains()">Calculate Rains</button>
   <h1>30 days Rain: {{thirtyDaysRain}} (mm)</h1>
-  <h1>Prev Year Rain: {{prevYearRain}} (mm)</h1>
+  <h1>Prev Year Rain (Starts Jan 1): {{prevYearRain}} (mm)</h1>
 </div>
 
 
 <div>
   <button ng-click="precipChartParse()" ng-show="chartY">Make Chart</button>
   <div>
-    <canvas id="bar" class="chart chart-bar" chart-data="chartY" chart-labels="chartX"></canvas>
+    <canvas id="bar" class="chart chart-bar" chart-data="chartData" chart-labels="chartX" chart-dataset-override="aveLine"></canvas>
   </div>
 </div>
 
-<button ng-click="findAveRain()">Average</button>
 <p>
-  Average Annual: {{aveAnnualRain[0].value}}
+  Average Annual: {{aveAnnualRain}}
 </p>
 
 

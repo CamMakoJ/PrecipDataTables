@@ -1,4 +1,4 @@
-var app = angular.module('rainApp', ["chart.js",'ngMaterial']);
+var app = angular.module('rainApp', ["chart.js", 'ngMaterial']);
 
 app.controller('mainCtrl', function($scope) {
 
@@ -10,6 +10,19 @@ app.controller('mainCtrl', function($scope) {
     $scope.prevYearRain = 0;
     $scope.chartY = [];
     $scope.chartX = [];
+    $scope.aveLine = [{
+            label: "Annual Rainfaill",
+            borderWidth: 1,
+            type: 'bar'
+        },
+        {
+            label: "Average Rainfall",
+            borderWidth: 3,
+            hoverBackgroundColor: "rgba(255,99,132,0.4)",
+            hoverBorderColor: "rgba(255,99,132,1)",
+            type: 'line'
+        }
+    ];
 
     //Handles the import/upload and conversion of the CSV
     $scope.csv = document.getElementById("file-input");
@@ -46,7 +59,7 @@ app.controller('mainCtrl', function($scope) {
         obj.forEach(function(item) {
             var time = moment(item.Date, 'DD/MM/YYYY').toObject();
             $scope.xData.push(time);
-          });
+        });
     };
 
     //Zips the two data arrays into a simplified array of objects
@@ -120,7 +133,7 @@ app.controller('mainCtrl', function($scope) {
                 });
             })
             .entries($scope.dataObject);
-      //runs function to update table once precip data is completed
+        //runs function to update table once precip data is completed
         $scope.updateTable();
     };
 
@@ -137,20 +150,34 @@ app.controller('mainCtrl', function($scope) {
             })
             .entries($scope.precipYears);
 
+            $scope.aveAnnualRain = $scope.aveAnnualRain[0].value;
+
     };
 
     //Turns the Annual Precipitation values into an array (for the y-axis)
     $scope.precipChartParse = function() {
         $scope.summariseYear();
+        $scope.findAveRain();
+        $scope.addAverage();
     };
     //Scoped outside the function and will be a callback for asynchrous update
-  $scope.updateTable = function()  {
-    $scope.precipYears.forEach(function(item) {
-        $scope.chartY.push(item.value);
-        $scope.chartX.push(item.key);
-    });
-  };
+    $scope.updateTable = function() {
+        $scope.precipYears.forEach(function(item) {
+            $scope.chartY.push(item.value);
+            $scope.chartX.push(item.key);
+        });
+    };
 
+    //adds the average to the precipYears Data
+    $scope.addAverage = function() {
+      $scope.tempAveArray = [];
+        //create an array of the same length as chartY with a repeated average
+      for (i=0; i < $scope.chartY.length; i++){
+          $scope.tempAveArray.push($scope.aveAnnualRain);
+      }
+      $scope.chartData = [$scope.chartY, $scope.tempAveArray];
+      console.log($scope.chartData);
+    };
 
 
 });
